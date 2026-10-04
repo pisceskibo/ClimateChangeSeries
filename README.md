@@ -9,7 +9,7 @@ Mục tiêu dự đoán:
 + Áp dụng đa dạng các phương pháp và mô hình dự báo chuỗi thời gian.
 
 ## 2. Autoregressive Integrated Moving Average (ARIMA):
-Mô hình ARIMA là mô hình tự hồi quy tích hợp trung bình trượt, là phương pháp phổ biến để dự báo chuỗi thời gian có tính dừng.
+Mô hình ARIMA là mô hình tự hồi quy tích hợp trung bình động, là phương pháp phổ biến để dự báo chuỗi thời gian có tính dừng. ARIMA kết hợp các thành phần tự hồi quy (autoregression), lấy sai phân (differencing), trung bình động (moving average) để mô hình hóa và dự báo các giá trị mới trong tương lai.
 
 Ký hiệu: $ARIMA(p, d, q)$ với $p, d, q > 0$
 
@@ -50,9 +50,9 @@ Dạng toán tử lùi thời gian (Backshift Operator $B$):
 
 $$\left(1 - \sum_{i=1}^{p} \phi_i B^i\right) (1 - B)^d y_t = c + \left(1 + \sum_{j=1}^{q} \theta_j B^j\right) \epsilon_t$$
 
-1. Kiểm định và xử lý tính dừng (Identifying $d$).
+1. Kiểm định ADF và xử lý tính dừng (Identifying $d$).
 2. Xác định bậc $p$ và $q$ (Model Identification) thông qua hàm đồ thị ACF và PACF.
-3. Ước lượng tham số (MLE/OLS) và đánh giá chỉ AIC/BIC càng nhỏ càng tốt.
+3. Ước lượng tham số (MLE/OLS) và đánh giá chỉ AIC/BIC càng nhỏ càng tốt với $\hat{L}$ là Maximum Likelihood, k = p + q + 1 (nếu chứa hằng số).
 $$\text{AIC} = 2k - 2\ln(\hat{L}), \text{BIC} = k\ln(n) - 2\ln(\hat{L})$$
 4. Chẩn đoán sai số của mô hình bằng cách kiểm tra phần dư $\epsilon_t = y_t - \hat{y}_t$ sao cho phần dư nhiễu trắng và có phân bố chuẩn.
 
@@ -67,3 +67,14 @@ $$\text{AIC} = 2k - 2\ln(\hat{L}), \text{BIC} = k\ln(n) - 2\ln(\hat{L})$$
 3. Huấn luyện mô hình (Model Training): sử dụng dữ liệu quá khứ để ước lượng các tham số và tối ưu hóa hiệu suất mô hình.
 4. Đánh giá mô hình (Model Evaluation): đánh giá độ chính xác của các mô hình dự báo và chỉ số đánh giá phù hợp.
 5. Dự báo (Forecasting): đưa ra dự đoán cho các mốc thời gian trong tương lai bằng mô hình đã huấn luyện.
+
+
+| STT | Mô hình                             | Có code thực hành |
+| --- | ----------------------------------- | ----------------- |
+| 1   | **ARIMA**                           | ✅                 |
+| 2   | **Linear Regression**               | ✅                 |
+| 3   | **SVR – Support Vector Regression** | ✅                 |
+| 4   | **Random Forest Regression**        | ✅                 |
+| 5   | **KNN Regression**                  | ✅                 |
+| 6   | **Decision Tree Regression**        | ✅                 |
+| 7   | **Neural Network / MLP**            | ✅                 |
