@@ -54,7 +54,9 @@ Quy trình thực hiện:
 1. Kiểm định ADF và xử lý tính dừng (Identifying $d$).
 2. Xác định bậc $p$ và $q$ (Model Identification) thông qua hàm đồ thị ACF và PACF.
 3. Ước lượng tham số (MLE/OLS) và đánh giá chỉ AIC/BIC càng nhỏ càng tốt với $\hat{L}$ là Maximum Likelihood, k = p + q + 1 (nếu chứa hằng số).
+
 $$\text{AIC} = 2k - 2\ln(\hat{L}), \text{BIC} = k\ln(n) - 2\ln(\hat{L})$$
+
 4. Chẩn đoán sai số của mô hình bằng cách kiểm tra phần dư $\epsilon_t = y_t - \hat{y}_t$ sao cho phần dư nhiễu trắng và có phân bố chuẩn.
 
 ## 3. Seasonal Autoregressive Integrated Moving-Average (SARIMA):
@@ -92,7 +94,9 @@ Quy trình thực hiện:
 1. Kiểm định ADF và xử lý tính dừng (Identifying $d$) theo chu kỳ.
 2. Xác định bậc $p$ và $q$ (Model Identification) thông qua hàm đồ thị ACF và PACF.
 3. Ước lượng tham số (MLE/OLS) và đánh giá chỉ AIC/BIC càng nhỏ càng tốt với $\hat{L}$ là Maximum Likelihood, k = p + q + P + Q + 1 (nếu chứa hằng số).
+
 $$\text{AIC} = 2k - 2\ln(\hat{L}), \text{BIC} = k\ln(n) - 2\ln(\hat{L})$$
+
 4. Chẩn đoán sai số của mô hình bằng cách kiểm tra phần dư $\epsilon_t = y_t - \hat{y}_t$ sao cho phần dư nhiễu trắng và có phân bố chuẩn.
 
 ## 4. Một số mô hình chuỗi thời gian khác (tham khảo):
