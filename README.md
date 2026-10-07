@@ -50,18 +50,56 @@ Dạng toán tử lùi thời gian (Backshift Operator $B$):
 
 $$\left(1 - \sum_{i=1}^{p} \phi_i B^i\right) (1 - B)^d y_t = c + \left(1 + \sum_{j=1}^{q} \theta_j B^j\right) \epsilon_t$$
 
+Quy trình thực hiện:
 1. Kiểm định ADF và xử lý tính dừng (Identifying $d$).
 2. Xác định bậc $p$ và $q$ (Model Identification) thông qua hàm đồ thị ACF và PACF.
 3. Ước lượng tham số (MLE/OLS) và đánh giá chỉ AIC/BIC càng nhỏ càng tốt với $\hat{L}$ là Maximum Likelihood, k = p + q + 1 (nếu chứa hằng số).
 $$\text{AIC} = 2k - 2\ln(\hat{L}), \text{BIC} = k\ln(n) - 2\ln(\hat{L})$$
 4. Chẩn đoán sai số của mô hình bằng cách kiểm tra phần dư $\epsilon_t = y_t - \hat{y}_t$ sao cho phần dư nhiễu trắng và có phân bố chuẩn.
 
-## 3. Một số mô hình chuỗi thời gian khác:
-+ Seasonal Autoregressive Integrated Moving-Average (SARIMA) là mô hình tự hồi quy tích hợp trung bình trượt mùa vụ, là phiên bản mở rộng của ARIMA có tính đến thành phần có tính chất chu kỳ mùa vụ (seasonal components) trong bộ dữ liệu.
+## 3. Seasonal Autoregressive Integrated Moving-Average (SARIMA):
+Seasonal Autoregressive Integrated Moving-Average (SARIMA) là mô hình tự hồi quy tích hợp trung bình trượt mùa vụ, là phiên bản mở rộng của ARIMA có tính đến thành phần có tính chất chu kỳ mùa vụ (seasonal components) trong bộ dữ liệu.
+
+Ký hiệu: $SARIMA(p, d, q) \times (P, D, Q)_m$
+
+### 3.1. Thành phần phi mùa vụ $(p, d, q)$:
+Giống với mô hình chuỗi thời gian ARIMA phía trên.
+
+### 3.2. Thành phần mùa vụ $(P, D, Q)_m$:
++ $P$ (Seasonal AR): là bậc tự hồi quy mùa vụ, mối quan hệ giữa thời điểm hiện tại và cùng thời điểm đó ở các chu kỳ trước ($y_t$ phụ thuộc vào $y_{t - m}, y_{t - 2m}, ...$).
++ $D$ (Seasonal Difference): bậc lấy sai phân mùa vụ ($\Delta_m y_t = y_t - y_{t-m}$) để triệt tiêu tính mùa vụ lặp đi lặp lại.
++ $Q$ (Seasonal MA): Bậc trung bình động mùa vụ. Dùng sai số dự báo từ các chu kỳ trước ($\epsilon_{t-m}, \epsilon_{t-2m}, ...$) để điều chỉnh.
++ $m$ (Seasonal Period): Độ dài của một chu kỳ mùa vụ (số bước thời gian để hình thành 1 chu kỳ lặp lại).
+    + $m = 7$: Dữ liệu theo ngày, tính chu kỳ theo tuần (Thứ Hai tuần này so với Thứ Hai tuần trước). => ACTIVE 
+    + $m = 12$: Dữ liệu theo tháng, tính chu kỳ theo năm (Tháng 1 năm nay so với Tháng 1 năm ngoái).
+
+### 3.3. Phương trình tổng quát $SARIMA(p, d, q) \times (P, D, Q)_m$:
+Sử dụng Toán tử lùi thời gian (Backshift Operator $B$), trong đó $B y_t = y_{t-1}$ và $B^m y_t = y_{t-m}$:
+
+$$\Phi_P(B^m) \, \phi_p(B) \, (1 - B)^d \, (1 - B^m)^D \, y_t = c + \Theta_Q(B^m) \, \theta_q(B) \, \epsilon_t$$
+
+trong đó:
++ $\phi_p(B) = 1 - \phi_1 B - \phi_2 B^2 - \dots - \phi_p B^p$: Đa thức AR phi mùa vụ.
++ $\Phi_P(B^m) = 1 - \Phi_1 B^m - \Phi_2 B^{2m} - \dots - \Phi_P B^{Pm}$: Đa thức AR mùa vụ.
++ $(1 - B)^d$: Sai phân phi mùa vụ bậc $d$.
++ $(1 - B^m)^D$: Sai phân mùa vụ bậc $D$.
++ $\theta_q(B) = 1 + \theta_1 B + \theta_2 B^2 + \dots + \theta_q B^q$: Đa thức MA phi mùa vụ.
++ $\Theta_Q(B^m) = 1 + \Theta_1 B^m + \Theta_2 B^{2m} + \dots + \Theta_Q B^{Qm}$: Đa thức MA mùa vụ.
++ $c$: Hằng số (Intercept / Drift).
++ $\epsilon_t$: Nhiễu trắng (White noise) có phân bố chuẩn $\mathcal{N}(0, \sigma^2)$.
+
+Quy trình thực hiện:
+1. Kiểm định ADF và xử lý tính dừng (Identifying $d$) theo chu kỳ.
+2. Xác định bậc $p$ và $q$ (Model Identification) thông qua hàm đồ thị ACF và PACF.
+3. Ước lượng tham số (MLE/OLS) và đánh giá chỉ AIC/BIC càng nhỏ càng tốt với $\hat{L}$ là Maximum Likelihood, k = p + q + P + Q + 1 (nếu chứa hằng số).
+$$\text{AIC} = 2k - 2\ln(\hat{L}), \text{BIC} = k\ln(n) - 2\ln(\hat{L})$$
+4. Chẩn đoán sai số của mô hình bằng cách kiểm tra phần dư $\epsilon_t = y_t - \hat{y}_t$ sao cho phần dư nhiễu trắng và có phân bố chuẩn.
+
+## 4. Một số mô hình chuỗi thời gian khác (tham khảo):
 + Exponential Smoothing (ETS) là phương pháp san phẳng mũ bao gồm các mô hình như San phẳng mũ đơn (Simple Exponential Smoothing), San phẳng mũ kép (Double Exponential Smoothing) và San phẳng mũ ba (Triple Exponential Smoothing - hay phương pháp Holt-Winters).
 + Mô hình Prophet là mô hình dự báo được phát triển bởi Facebook, được thiết kế để xử lý dữ liệu chuỗi thời gian có tính mùa vụ (seasonality) và ảnh hưởng của các ngày lễ (holiday effects).
 
-## 4. Quy trình phân tích chuỗi thời gian dự báo thời tiết:
+## 5. Quy trình phân tích chuỗi thời gian dự báo thời tiết:
 1. Tiền xử lý dữ liệu (Data Preprocessing): làm sạch và biến đổi dữ liệu để xử lý các giá trị bị khuyết, giá trị ngoại lai và các điểm bất thường. Trong đó, dữ liệu có thể được phân rã (decomposition) để tách các thành phần chính có xu hướng theo mùa vụ.
 2. Lựa chọn mô hình (Model Selection): chọn mô hình phù hợp dựa trên đặc tính của dữ liệu chuỗi thời gian.
 3. Huấn luyện mô hình (Model Training): sử dụng dữ liệu quá khứ để ước lượng các tham số và tối ưu hóa hiệu suất mô hình.
@@ -71,10 +109,9 @@ $$\text{AIC} = 2k - 2\ln(\hat{L}), \text{BIC} = k\ln(n) - 2\ln(\hat{L})$$
 
 | STT | Mô hình                             | Có code thực hành |
 | --- | ----------------------------------- | ----------------- |
-| 1   | **ARIMA**                           | ✅                 |
+| 1   | **ARIMA, SARIMA**                           | ✅                 |
 | 2   | **Linear Regression**               | ✅                 |
 | 3   | **SVR – Support Vector Regression** | ✅                 |
 | 4   | **Random Forest Regression**        | ✅                 |
 | 5   | **KNN Regression**                  | ✅                 |
 | 6   | **Decision Tree Regression**        | ✅                 |
-| 7   | **Neural Network / MLP**            | ✅                 |
