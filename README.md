@@ -76,7 +76,7 @@ Giống với mô hình chuỗi thời gian ARIMA phía trên.
     + $m = 12$: Dữ liệu theo tháng, tính chu kỳ theo năm (Tháng 1 năm nay so với Tháng 1 năm ngoái).
 
 ### 3.3. Phương trình tổng quát $SARIMA(p, d, q) \times (P, D, Q)_m$:
-Sử dụng Toán tử lùi thời gian (Backshift Operator $B$), trong đó $B y_t = y_{t-1}$ và $B^m y_t = y_{t-m}$:
+Sử dụng Toán tử lùi thời gian (Backshift Operator $B$) với $B y_t = y_{t-1}$ và $B^m y_t = y_{t-m}$, ta có phương trình:
 
 $$\Phi_P(B^m) \, \phi_p(B) \, (1 - B)^d \, (1 - B^m)^D \, y_t = c + \Theta_Q(B^m) \, \theta_q(B) \, \epsilon_t$$
 
@@ -120,4 +120,4 @@ $$\text{AIC} = 2k - 2\ln(\hat{L}), \text{BIC} = k\ln(n) - 2\ln(\hat{L})$$
 | 5   | **KNN Regression**                  | ✅                 |
 | 6   | **Decision Tree Regression**        | ✅                 |
 
-> Tài liệu tham khảo: https://www.kaggle.com/code/aniketkadam702030/daily-climate-change-time-series/notebook
+> Tài liệu tham khảo: [daily-climate-change-time-series](https://www.kaggle.com/code/aniketkadam702030/daily-climate-change-time-series/notebook)
