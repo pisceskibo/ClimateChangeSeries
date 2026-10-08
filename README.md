@@ -119,3 +119,5 @@ $$\text{AIC} = 2k - 2\ln(\hat{L}), \text{BIC} = k\ln(n) - 2\ln(\hat{L})$$
 | 4   | **Random Forest Regression**        | ✅                 |
 | 5   | **KNN Regression**                  | ✅                 |
 | 6   | **Decision Tree Regression**        | ✅                 |
+
+> Tài liệu tham khảo: https://www.kaggle.com/code/aniketkadam702030/daily-climate-change-time-series/notebook
